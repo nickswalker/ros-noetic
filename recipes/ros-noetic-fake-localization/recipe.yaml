@@ -1,0 +1,66 @@
+package:
+  name: ros-noetic-fake-localization
+  version: 1.17.3
+source:
+  git_url: https://github.com/ros-gbp/navigation-release.git
+  git_rev: release/noetic/fake_localization/1.17.3-1
+  folder: ros-noetic-fake-localization/src/work
+
+build:
+  script:
+    sel(win): bld_catkin.bat
+    sel(unix): build_catkin.sh
+  number: 14
+about:
+  home: https://www.ros.org/
+  license: BSD-3-Clause
+  summary: |
+    Robot Operating System
+
+extra:
+  recipe-maintainers:
+    - ros-forge
+
+requirements:
+  build:
+    - "{{ compiler('cxx') }}"
+    - "{{ compiler('c') }}"
+    - sel(linux64): sysroot_linux-64 2.17
+    - ninja
+    - setuptools
+    - sel(unix): make
+    - sel(unix): coreutils
+    - sel(osx): tapi
+    - sel(build_platform != target_platform): pkg-config
+    - cmake
+    - sel(build_platform != target_platform): python
+    - sel(build_platform != target_platform): cross-python_{{ target_platform }}
+    - sel(build_platform != target_platform): cython
+    - sel(build_platform != target_platform): numpy
+  host:
+    - numpy
+    - pip
+    - sel(build_platform == target_platform): pkg-config
+    - python
+    - ros-distro-mutex 0.4 noetic
+    - ros-noetic-angles
+    - ros-noetic-catkin
+    - ros-noetic-geometry-msgs
+    - ros-noetic-message-filters
+    - ros-noetic-nav-msgs
+    - ros-noetic-rosconsole
+    - ros-noetic-roscpp
+    - ros-noetic-rospy
+    - ros-noetic-tf2-geometry-msgs
+    - ros-noetic-tf2-ros
+  run:
+    - python
+    - ros-distro-mutex 0.4 noetic
+    - ros-noetic-geometry-msgs
+    - ros-noetic-message-filters
+    - ros-noetic-nav-msgs
+    - ros-noetic-rosconsole
+    - ros-noetic-roscpp
+    - ros-noetic-rospy
+    - ros-noetic-tf2-ros
+    - sel(osx and x86_64): __osx >={{ MACOSX_DEPLOYMENT_TARGET|default('10.14') }}
